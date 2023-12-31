@@ -1,0 +1,23 @@
+version: '2'
+services:
+  ogn:
+    build: ./ogn
+    image: ogn
+    restart: always
+    environment:
+      - LAT=
+      - LON=
+      - ALT=
+      - OGN_DEVICE=
+      - OGN_CALLSIGN=
+
+    devices:
+      - "/dev/bus/usb"
+    expose:
+      - "8082"
+      - "50000"
+      - "50001"
+    ports:
+      - "8082:8082"
+      - "50000:50000"
+      - "50001:50001"

@@ -1,0 +1,68 @@
+FROM balenalib/%%BALENA_ARCH%%-debian:bookworm AS base
+LABEL maintainer="https://github.com/ketilmo"
+
+EXPOSE 8082 50000 50001
+
+ENV LAT=
+ENV LON=
+ENV ALT=
+ENV OGN_DEVICE=
+ENV OGN_CALLSIGN=
+
+ARG PERM_INSTALL="ntp ntpdate procserv telnet nano tini wget libpng-tools lynx libusb-1.0-0-dev libfftw3-bin gettext-base"
+
+RUN apt update && \
+	apt install -y $PERM_INSTALL && \
+	apt clean && apt autoclean && apt autoremove && \
+	rm -rf /var/lib/apt/lists/*
+
+FROM base AS buildstep
+
+ARG TEMP_INSTALL="git build-essential libconfig9 libtool debhelper cmake make pkg-config lsb-release libpng-dev libconfig-dev libfftw3-dev"
+
+RUN apt update && \
+	apt install -y $TEMP_INSTALL
+
+WORKDIR /
+RUN git clone https://github.com/VirusPilot/rtl-sdr.git && \
+    cd rtl-sdr && \
+	dpkg-buildpackage -b --no-sign
+
+COPY install-rtlsdr-ogn.sh /tmp/
+COPY install/* /tmp/
+
+RUN chmod +x /tmp/install-rtlsdr-ogn.sh && /tmp/install-rtlsdr-ogn.sh
+
+FROM base AS release
+
+WORKDIR /tmp
+
+COPY --from=buildstep /librtlsdr0_*.deb .
+COPY --from=buildstep /librtlsdr-dev_*.deb .
+COPY --from=buildstep /rtl-sdr_*.deb .
+
+RUN dpkg -i librtlsdr0_*.deb && sudo dpkg -i librtlsdr-dev_*.deb && sudo dpkg -i rtl-sdr_*.deb && rm -rf *
+
+WORKDIR /root
+
+RUN mkdir rtlsdr-ogn
+
+WORKDIR /root/rtlsdr-ogn/
+
+COPY --from=buildstep /tmp/rtlsdr-ogn-0.2.9/* /root/rtlsdr-ogn/
+RUN wget http://download.glidernet.org/common/WW15MGH.DAC
+
+RUN chown root gsm_scan
+RUN chmod a+s gsm_scan
+RUN chown root ogn-rf
+RUN chmod a+s ogn-rf
+RUN chown root rtlsdr-ogn
+RUN chmod a+s rtlsdr-ogn
+RUN mknod gpu_dev c 100 0
+
+COPY ogn.conf.tpl .
+
+COPY start.sh /
+RUN chmod +x /start.sh
+
+ENTRYPOINT ["/usr/bin/tini", "--", "/start.sh"]
