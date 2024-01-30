@@ -138,3 +138,5 @@ Updating to the latest version is trivial. If you installed balena-ads-b using t
 If you used the manual `balena push` method, pull the changes from the master branch and push the update to your application with the balena CLI. For complete instructions, look at [Part 2 – Setup balena and configure the device](#part-2--setup-balena-and-configure-the-device).
 
 Enjoy!
+
+![Visitors](https://api.visitorbadge.io/api/combined?path=https%3A%2F%2Fgithub.com%2Fketilmo%2Fbalena-ogn&countColor=%23263759)
