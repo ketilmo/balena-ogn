@@ -1,10 +1,13 @@
-# ogn-pi34 (ogn binary beta version 0.2.9 / Feb 14 2023)
-- script `install-pi34.sh` to built an OGN station to feed the **Open Glider Network:** https://wiki.glidernet.org
-- the alternative script `install-pi3-gpu.sh` makes use of the GPU on the Pi3 to reduce CPU workload (but only on 32bit and up to Rapsbian Buster platforms)
-- Pi Zero 2W, Pi3 or Pi4 with **RasPiOS Lite** (32bit or 64bit) are supported
+# ogn-pi34 install scripts
+- standard script `install-pi34.sh` to built a receiver station to feed the **Open Glider Network:** https://wiki.glidernet.org
+- alternative script `install-pi34-adsb.sh` installs https://github.com/VirusPilot/dump1090 in addition to feed **Open Glider Network** with ADS-B
+  -  max. ADS-B SDR gain = 30dB (to prefer local traffic)
+  -  adaptive gain and adaptive burst mode enabled (to prefer local traffic)
+- Pi Zero 2W, Pi3, Pi4 or Pi5 with **RasPiOS Lite** (32bit or 64bit) are supported
 - Raspberry Pi Imager (https://www.raspberrypi.com/software/) is recommended
-- latest 0.2.9 version enables **SDR autogain** to avoid crossmodulation
-- latest 0.2.9 version support the following protocols:
+- latest 0.3.0 version enables **SDR autogain** to avoid crossmodulation
+- latest 0.3.0 version supports the following protocols:
+  - ADS-B (requires `dump1090-fa` runing on the same receiver)
   - FLARM
   - OGN
   - SafeSky
@@ -14,20 +17,24 @@
   - Skymaster
   - FANET (paragliders)
   - Spidertracks
-  - **ADS-L** (experimental)
+  - ADS-L
+  - ...
 
-## supported RasPiOS and Pi versions
-- `rtlsdr-ogn-bin-arm64-0.2.9_debian_bullseye.tgz`: **64-bit** Debian 12,11,10 (bookworm, bullseye, buster), Pi Zero 2W, Pi3 or Pi4
-- `rtlsdr-ogn-bin-ARM-0.2.9_raspbian_buster.tgz`: **32-bit** Debian 12,11,10 (bookworm, bullseye, buster), Pi Zero 2W, Pi3 or Pi4
-- `rtlsdr-ogn-bin-ARM-0.2.9_raspbian_stretch.tgz`: **32-bit** Debian 9 (stretch), Pi Zero 2W or Pi3
-- `rtlsdr-ogn-bin-RPI-GPU-0.2.9_raspbian_stretch.tgz`: **32-bit** Debian 9,10 (buster, stretch), Pi3 (using GPU)
+## supported RasPiOS and Pi versions (from http://download.glidernet.org)
+- **64-bit**: Debian 12 Bookworm or newer on Pi Zero 2W, Pi3, Pi4 or Pi5
+- **32-bit**: Debian 11 Bullseye or newer on Pi Zero 2W, Pi3, Pi4 or Pi5
 
-## packages for x86 and x64 based thin-clients, please install them manually
-- `rtlsdr-ogn-bin-x64-0.2.9_debian_bullseye.tgz`
-- `rtlsdr-ogn-bin-x64-0.2.9_ubuntu_cosmic.tgz`
-- `rtlsdr-ogn-bin-x86-0.2.9_debian_buster.tgz`
-
-## prepare script for Pi3B, Pi4B or Pi Zero 2W:
+## packages for legacy platforms (from Pawel)
+- https://github.com/VirusPilot/ogn-pi34/blob/master/rtlsdr-ogn-bin-RPI-GPU-0.3.0_Jessie.tgz
+- https://github.com/VirusPilot/ogn-pi34/blob/master/rtlsdr-ogn-bin-RPI-GPU-0.3.0_Stretch.tgz
+- https://github.com/VirusPilot/ogn-pi34/blob/master/rtlsdr-ogn-bin-ARM-0.3.0_Jessie.tgz
+- https://github.com/VirusPilot/ogn-pi34/blob/master/rtlsdr-ogn-bin-ARM-0.3.0_Stretch.tgz
+- https://github.com/VirusPilot/ogn-pi34/blob/master/rtlsdr-ogn-bin-ARM-0.3.0_Buster.tgz
+- https://github.com/VirusPilot/ogn-pi34/blob/master/rtlsdr-ogn-bin-arm64-0.3.0_Bullseye.tgz
+- https://github.com/VirusPilot/ogn-pi34/blob/master/rtlsdr-ogn-bin-x86-0.3.0_Buster.tgz
+- https://github.com/VirusPilot/ogn-pi34/blob/master/rtlsdr-ogn-bin-x64-0.3.0_Bullseye.tgz
+ 
+## prepare script for Pi3, Pi4, Pi5 or Pi Zero 2W:
 - flash latest **RasPiOS Lite Image** (32bit or 64bit), using latest Raspberry Pi Imager with the following settings:
   - select appropriate hostname
   - enable ssh
@@ -35,66 +42,67 @@
   - configure WiFi (particularly important for Pi Zero 2W)
 - boot and wait until your Pi is connected to your LAN or WiFi
 
-## preparation of OGN credentials
-During the setup process you will be asked to edit (using nano) `Template.conf` for which you should have the following credentials at hand:
-- SDR device number (to avoid conflicts if you have multiple SDRs installed); alternatively if you know already the serial number of your SDR, you can use that to automatically select the appropriate SDR
+## preparation of credentials
+During the setup process you will be automatically asked to edit `Template.conf` and potentially `dump1090-fa` for which you should have the following credentials at hand:
+- SDR index numbers or SDR serial numbers (SN) for both the OGN and ADS-B SDRs
 - SDR ppm calibration (only required for non-TCXO SDRs), this can also be measured and modified accordingly post install if unknown
+- OGN station name, e.g. your local airport ICAO code (max. 9 characters), please refer to http://wiki.glidernet.org/receiver-naming-convention
+- station coordinates and altitude for both the OGN and ADS-B configuration file
+
+SDR selection and ppm correction:
 ```
 RF:
 {
-  Device   = 0;            # SDR selection by device index, can be verified with "sudo rtl_eeprom -d 0" or "-d 1", ...
-  #DeviceSerial = "868";   # SDR selection by serial number (as an alternative)
-  FreqCorr = 0;            # [ppm] "big" R820T sticks have 40-80ppm correction factors, measure it with gsm_scan
-                           # SDRs with TCXO: have near zero frequency correction and you can ommit this parameter
+  Device   = 0;            # device selection based on SDR index number, please doublecheck post-install using "rtl_test"
+  #DeviceSerial = "868";   # alternative device selection based on SDR serial number (SN), please doublecheck post-install using "rtl_test"
+  FreqCorr = 0;            # [ppm] SDR correction factor, newer sticks have a TCXO so no correction required
+  SampleRate = 2.0;        # [MHz] 1.0 or 2.0MHz, 2MHz is required to captue PilotAware
+  BiasTee  = 0;            # just a safeguard
 };
 ```
-- SDR autogain target range (adding MinNoise and MaxNoise values):
+In case your OGN station is in an area with no GSM stations then the automatic gsm_scan should be deactivated by changing to `GSM.CenterFreq=0` (as an alternative you can ommit the entire GSM section for SDRs with TCXO):
 ```
-OGN:
-{
-  CenterFreq = 868.8;    # [MHz] with 868.8MHz and 2MHz bandwidth you can capture all systems: FLARM/OGN/FANET/PilotAware...
-  Gain       =  50.0;    # [dB]  this is the startup gain, will be automatically adjusted
-  MinNoise   =   2.0;    # default minimum allowed noise, you can ommit this parameter
-  MaxNoise   =   8.0;    # default maximum allowed noise, you can ommit this parameter
+GSM:                  # for frequency calibration based on GSM signals
+{                     # you can ommit the whole GSM section for sticks with TCXO
+  CenterFreq  =    0; # [MHz] you may enter the GSM frequency that you found with gsm_scan but ONLY if you have GSM stations nearby
+  Gain        = 25.0; # [dB]  RF input gain (beware that GSM signals are very strong)
 };
 ```
-- **important:** in case your OGN station is in an area with no GSM stations then the automatic gsm_scan should be deactivated by changing to `GSM.CenterFreq=0` (as an alternative you can ommit the entire GSM section for SDRs with TCXO):
-```
-GSM:                     # for frequency calibration based on GSM signals
-{
-  CenterFreq  =     0;   # [MHz] find the best GSM frequency with gsm_scan
-  Gain        =  30.0;   # [dB]  RF input gain (beware that GSM signals are very strong !)
-};
-```
-- **important:** GPS coordinates and altitude for your OGN station:
+GPS coordinates and altitude for your OGN station:
 ```
 Position:
 { 
-  Latitude   =   +48.0000; # [deg] Antenna coordinates
-  Longitude  =    +9.0000; # [deg]
-  Altitude   =        100; # [m]   Altitude above sea leavel
+  Latitude   =   +48.0000; # [deg] please put in the appropriate latitude for your OGN station antenna
+  Longitude  =   +10.0000; # [deg] please put in the appropriate longitude for your OGN station antenna
+  Altitude   =        500; # [m]   altitude AMSL, please put in the appropriate altitude for your OGN station antenna
 };
 ```
-- APRS name (please remove the `#` in front of `Call` and change `SampleAPRSnameToChange` to your APRS callsign):
+Required configuration for feeding Open Glider Network with ADS-B traffic:
+```
+ADSB:                      # feeding Open Glider Network with ADS-B traffic
+{
+  AVR = "localhost:30002"; # disable this line if you DO NOT WANT to feed Open Glider Network with ADS-B traffic
+  MaxAlt = 18000;          # [ft] default maximum altitude, feel free to increase but this will potentially increase your internet traffic
+};
+```
+Replace <NewOGNrx> with your actual APRS callsign, please refer to http://wiki.glidernet.org/receiver-naming-convention:
 ```
 APRS:
 {
-  Call = "SampleAPRSnameToChange";      # APRS callsign (max. 9 characters)
-                                        # Please refer to http://wiki.glidernet.org/receiver-naming-convention
+  #Call = "NewOGNrx";          # enable this line and replace <NewOGNrx> with your actual APRS callsign, e.g. your local airport ICAO code (max. 9 characters)
+                               # please refer to http://wiki.glidernet.org/receiver-naming-convention
 };
 ```
-- you can monitor your OGN receiver by visiting https://yourstation:8080 and https://yourstation:8081
-- in case you plan to combine the OGN station with a dump1090 feeder, the following addition is necessary:
+In case you plan to combine the OGN station with a dump1090-fa feeder (like in the alternative install script below), the following section is required:
 ```
-HTTP:
-{
-  Port = 8082;
-};
+HTTP:           # this section is required to be able to monitor the different status pages of your receiver
+{               # e.g. http://raspberrypi:8080 for monitoring ADS-B traffic
+  Port = 8082;  # e.g. http://raspberrypi:8082 for monitoring the RTLSDR OGN RF processor status page
+};              # e.g. http://raspberrypi:8083 for monitoring the RTLSDR OGN demodulator and decoder status page
 ```
-- now you can monitor your OGN receiver by visiting https://yourstation:8082 and https://yourstation:8083
-- your dump1090 station can be monitored by visiting https://yourstation:8080
+
 ## automatic setup (standard script)
-- plug your SD card into the Pi, connect your Pi3 or Pi4 to LAN via Ethernet cable and boot (in case of Pi Zero 2W you may need to wait and check for successful WiFi connection)
+- plug your SD card into the Pi, connect your Pi3, Pi4 or Pi5 to LAN via Ethernet cable and boot (in case of Pi Zero 2W you may need to wait and check for successful WiFi connection)
 - connect to your pi using ssh
 ```
 sudo apt update
@@ -103,24 +111,42 @@ git clone https://github.com/VirusPilot/ogn-pi34.git
 ./ogn-pi34/install-pi34.sh
 ```
 
-## automatic setup (alternative script with GPU code for Pi3)
+## automatic setup (alternative script that installs dump1090-fa in addition)
+- based on https://github.com/VirusPilot/dump1090
 ```
 sudo apt update
 sudo apt install git -y
 git clone https://github.com/VirusPilot/ogn-pi34.git
-./ogn-pi34/install-pi3-gpu.sh
+./ogn-pi34/install-pi34-adsb.sh
 ```
 
-## please use these scripts with caution and ideally on a fresh 64bit RasPiOS Lite Image
-if you intent to upgrade an older OGN version, you just have to replace two binaries: `ogn-rf` and `ogn-decode`, here are the required steps (Bullseye 64-bit version as an example):
+## steps to manually upgrade legacy platforms (e.g. a 32bit RasPiOS Buster v0.2.8 receiver)
+`ogn-rf` and `ogn-decode` need to be replaced, here are the required steps:
 - `mkdir temp`
-- `tar xvf ogn-pi34/rtlsdr-ogn-bin-arm64-0.2.9_debian_bullseye.tgz -C ./temp`
-- `cp ./temp/rtlsdr-ogn/ogn-* <your current rtlsdr-ogn folder>`
+- `cd temp`
+- `git clone https://github.com/VirusPilot/ogn-pi34`
+- `tar xvf ogn-pi34/rtlsdr-ogn-bin-ARM-0.3.0_Buster.tgz`
+- `cp -f rtlsdr-ogn/ogn-* <your_current_rtlsdr-ogn_folder>`
+- if you have a dump1090-fa instance already running and want to feed OGN with ADS-B traffic, you need to add the following section to your OGN configuration file:
+  ```
+  ADSB:
+  {
+    AVR = "localhost:30002";
+    MaxAlt = 18000;
+  };
+  ```
+- `cd <your_current_rtlsdr-ogn_folder>`
+- `sudo chown root gsm_scan ogn-rf rtlsdr-ogn`
+- `sudo chmod a+s gsm_scan ogn-rf rtlsdr-ogn`
 - `sudo service rtlsdr-ogn restart`
 - `sudo service rtlsdr-ogn status` (to verify that the new version is running)
 
 ## post install modifications
 ### SDR ppm calibration (only required for non-TCXO SDRs)
 - see https://github.com/glidernet/ogn-rf/blob/6d6cd8a15a5fbff122542401180ea7e58af9ed92/INSTALL#L42
-### nightly reboot at 1 am
-- execute the following: `sudo crontab -e` then add `0 1 * * * /sbin/reboot` and save 
+### optional: nightly reboot at 1 am
+- execute the following: `sudo crontab -e` then add `0 1 * * * /sbin/reboot` and save
+### optional: disable swapfile
+- `sudo systemctl disable dphys-swapfile`
+- `sudo apt purge dphys-swapfile -y`
+- `sudo apt autoremove -y`

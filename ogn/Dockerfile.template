@@ -1,13 +1,15 @@
 FROM balenalib/%%BALENA_ARCH%%-debian:bookworm AS base
 LABEL maintainer="https://github.com/ketilmo"
 
-EXPOSE 8082 50000 50001
+EXPOSE 8080 8082 8083 50000 50001
 
 ENV LAT=
 ENV LON=
 ENV ALT=
 ENV OGN_DEVICE=
 ENV OGN_CALLSIGN=
+ENV RECEIVER_HOST dump1090-fa
+ENV RECEIVER_PORT 30002
 
 ARG PERM_INSTALL="ntp ntpdate procserv telnet nano tini wget libpng-tools lynx libusb-1.0-0-dev libfftw3-bin gettext-base"
 
@@ -49,7 +51,7 @@ RUN mkdir rtlsdr-ogn
 
 WORKDIR /root/rtlsdr-ogn/
 
-COPY --from=buildstep /tmp/rtlsdr-ogn-0.2.9/* /root/rtlsdr-ogn/
+COPY --from=buildstep /tmp/rtlsdr-ogn-0.3.0/* /root/rtlsdr-ogn/
 RUN wget http://download.glidernet.org/common/WW15MGH.DAC
 
 RUN chown root gsm_scan

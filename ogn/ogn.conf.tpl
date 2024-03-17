@@ -6,6 +6,7 @@ RF:
   FreqCorr = +0;          # [ppm] big black/blue R820T(2) sticks have 40-80ppm correction factors, measure it with gsm_scan
                            # sticks with TCXO: silver/orange have near zero frequency correction and you can ommit this parameter
   SampleRate = 2.0;        # [MHz] 1.0 or 2.0MHz, a bit more CPU is needed to run 2MHz but if you want to capture PilotAware you need it
+  BiasTee  = 0;    
 
                            # You can ommit the whole GSM section for sticks with TCXO
   GSM:                     # for frequency calibration based on GSM signals
@@ -16,6 +17,8 @@ RF:
   OGN:
   { CenterFreq = 868.8;    # [MHz] with 868.8MHz and 2MHz bandwidth you can capture all systems: FLARM/OGN/FANET/PilotAware
     Gain       =  50.0;    # [dB]  Normally use full gain, unless intermodulation occurs of you run with an LNA, then you need to find best value
+    MinNoise   =   2.0;    # default minimum allowed noise, you can ommit this parameter
+    MaxNoise   =   8.0;    # default maximum allowed noise, you can ommit this parameter
   } ;
 
 } ;
@@ -23,7 +26,7 @@ RF:
 Demodulator:             # this section can be ommited as the defaults are reasonable
 { ScanMargin = 30.0;     # [kHz] frequency tolerance for reception, most signals should normally be +/-15kHz but some are more off frequency
   DetectSNR  = 11.0;     # [dB]  detection threshold for FLARM/OGN
-  MergeServer = "flarm-collector.opensky-network.org:20002"; 
+  MergeServer = "flarm-collector.opensky-network.org:20002"; # Feed data to OpenSky Network
 } ;
 
 Position:
@@ -37,6 +40,12 @@ APRS:
 { Call = "${OGN_CALLSIGN}";     # APRS callsign (max. 9 characters) set you own name: airfield ID or locaiion name
                          # Please refer to http://wiki.glidernet.org/receiver-naming-convention
 } ;
+
+ADSB:                      # feeding Open Glider Network with ADS-B traffic
+{
+  #AVR = "${RECEIVER_HOST}:${RECEIVER_PORT}"; # disable this line if you DO NOT WANT to feed Open Glider Network with ADS-B traffic
+  MaxAlt = 18000;          # [ft] default maximum altitude, feel free to increase but this will potentially increase your internet traffic
+};
 
 HTTP:
 {
