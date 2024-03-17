@@ -43,7 +43,7 @@ APRS:
 
 ADSB:                      # feeding Open Glider Network with ADS-B traffic
 {
-  AVR = "${RECEIVER_HOST}:${RECEIVER_PORT}"; # disable this line if you DO NOT WANT to feed Open Glider Network with ADS-B traffic
+  ${OGN_ADSB_ENABLED_TPL}AVR = "${OGN_ADSB_RECEIVER_HOST}:${OGN_ADSB_RECEIVER_PORT}"; # disable this line if you DO NOT WANT to feed Open Glider Network with ADS-B traffic
   MaxAlt = 18000;          # [ft] default maximum altitude, feel free to increase but this will potentially increase your internet traffic
 };
 

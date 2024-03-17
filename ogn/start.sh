@@ -30,6 +30,13 @@ else
         export OGN_DEVICE_TPL="DeviceSerial = \"${OGN_DEVICE}\""
 fi
 
+if [ "$OGN_ADSB_ENABLED" = "true" ]; then
+        echo "OGN ADS-B feeding is enabled."
+        export OGN_ADSB_ENABLED_TPL=""
+else
+        echo "OGN ADS-B feeding is disabled."
+        export OGN_ADSB_ENABLED_TPL="#"
+fi
 
 # End defining all the required configuration variables.
 

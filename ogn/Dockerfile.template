@@ -8,8 +8,10 @@ ENV LON=
 ENV ALT=
 ENV OGN_DEVICE=
 ENV OGN_CALLSIGN=
-ENV RECEIVER_HOST dump1090-fa
-ENV RECEIVER_PORT 30002
+OGN_ADSB_ENABLED=
+ENV OGN_ADSB_RECEIVER_HOST dump1090-fa
+ENV OGN_ADSB_RECEIVER_PORT 30002
+
 
 ARG PERM_INSTALL="ntp ntpdate procserv telnet nano tini wget libpng-tools lynx libusb-1.0-0-dev libfftw3-bin gettext-base"
 
