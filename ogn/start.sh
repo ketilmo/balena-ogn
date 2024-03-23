@@ -38,6 +38,14 @@ else
         export OGN_ADSB_ENABLED_TPL="#"
 fi
 
+if [ "$OGN_OPENSKY_ENABLED" = "true" ]; then
+        echo "OpenSky Network feeding is enabled."
+        export OGN_OPENSKY_ENABLED_TPL=""
+else
+        echo "OpenSky Network feeding is disabled."
+        export OGN_OPENSKY_ENABLED_TPL="#"
+fi
+
 # End defining all the required configuration variables.
 
 echo " "

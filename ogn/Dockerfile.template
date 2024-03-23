@@ -9,9 +9,22 @@ ENV ALT=
 ENV OGN_DEVICE=
 ENV OGN_CALLSIGN=
 ENV OGN_ADSB_ENABLED=
+ENV OGN_OPENSKY_ENABLED=
 ENV OGN_ADSB_RECEIVER_HOST dump1090-fa
 ENV OGN_ADSB_RECEIVER_PORT 30002
+ENV OGN_ADSB_MAXALT 18000
+ENV OGN_SAMPLERATE 2.0
+ENV OGN_BIASTEE 0
+ENV OGN_FREQCORR +0
+ENV OGN_CENTERFREQ 868.8
+ENV OGN_GAIN 50.0
+ENV OGN_MINNOISE 2.0
+ENV OGN_MAXNOISE 8.0
+ENV OGN_DEMODULATOR_SCANMARGIN 30.0
+ENV OGN_DEMODULATOR_DETECTSNR 11.0
 
+ENV OGN_GSM_CENTERFREQ 948.2
+ENV OGN_GSM_GAIN 40.0
 
 ARG PERM_INSTALL="ntp ntpdate procserv telnet nano tini wget libpng-tools lynx libusb-1.0-0-dev libfftw3-bin gettext-base"
 
@@ -53,7 +66,7 @@ RUN mkdir rtlsdr-ogn
 
 WORKDIR /root/rtlsdr-ogn/
 
-COPY --from=buildstep /tmp/rtlsdr-ogn-0.3.0/* /root/rtlsdr-ogn/
+COPY --from=buildstep /tmp/rtlsdr-ogn-0.3.2/* /root/rtlsdr-ogn/
 RUN wget http://download.glidernet.org/common/WW15MGH.DAC
 
 RUN chown root gsm_scan
@@ -68,5 +81,8 @@ COPY ogn.conf.tpl .
 
 COPY start.sh /
 RUN chmod +x /start.sh
+
+COPY add-serial-868.sh /
+RUN chmod +x /add-serial-868.sh
 
 ENTRYPOINT ["/usr/bin/tini", "--", "/start.sh"]
