@@ -1,3 +1,4 @@
+
 ![balena OGN Glider Tracker](https://raw.githubusercontent.com/ketilmo/balena-ogn/master/docs/images/header.png)
 
 **Feed the glider traffic in your area to the Open Glider Network (OGN) using a Raspberry Pi 3 or 4 with balena!**
@@ -58,17 +59,11 @@ Software packages downloaded, installed, and configured by the balena-ogn script
 Coming Soon!
 
 # Part 1 – Build the receiver
+In its most minimal configuration, the receiver can be built using three core components: A currently supported [device](https://thepihut.com/products/raspberry-pi-4-model-b?variant=20064052674622) (see the [complete list](#supported-devices) above), a good [RTL-SDR USB dongle](https://thepihut.com/products/rtl-sdr-blog-v3-usb-dongle-with-dipole-antenna-kit) and an [868 MHz](https://store.rakwireless.com/products/fiber-glass-antenna?variant=41100821921990) (for Europe, Africa, and New Zealand) or [915 MHz](https://store.rakwireless.com/products/fiber-glass-antenna?variant=39705894813894) (for USA and Australia) antenna. In addition, you would need a [power supply](https://thepihut.com/products/raspberry-pi-27w-usb-c-power-supply?variant=42531604136131) for the device, an [SD card](https://thepihut.com/products/sandisk-microsd-card-class-10-a1) to install the operating system on, an [antenna cable](https://store.rakwireless.com/products/pulsar-cable-rak9731-rak9733?variant=39677580968134), and – depending on your choice – an [SMA adapter](https://store.rakwireless.com/products/sma-adapter). If you don't have it already, you'll need a [SD card reader](https://thepihut.com/products/mini-usb-c-microsd-card-reader), too. Although not strictly necessary, a [case](https://thepihut.com/products/raspberry-pi-4-case) for the device could be a good idea.
 
-We'll build the receiver using the parts that are outlined on the Flightradar24, FlightAware, and RadarBox websites: 
-- https://www.flightradar24.com/build-your-own
-- https://flightaware.com/adsb/piaware/build
-- https://www.radarbox.com/raspberry-pi
+Piecing together the pieces should be straightforward. For more information, including other antenna options, look at the official OGN [hardware docs](https://wiki.glidernet.org/ogn-receiver-hardware-and-software). (Remember: For balena-ogn to work, please go with a device from the [supported devices](#supported-devices) list.)
 
-These sites suggest the Raspberry Pi 3 Model B+ as the preferred device. Still, this project runs on all the devices mentioned above. Suppose you are buying a new appliance specifically for this project. In that case, we suggest the **Raspberry Pi 4 Model B** with as much memory as possible. It's excellent value for money.
 
-In addition to the device, you will need an RTL-SDR-compatible USB dongle. The dongles are based on a digital television tuner, and numerous types will work – both generic TV sticks and specialized ADS-B sticks (produced by FlightAware). Although both options work, the ADS-B sticks seem to perform a little better.
-
-If you live in the US, and want to track UAT traffic in addition to ADS-B traffic, you can use two dongles in parallell. Please note that the blue FlightAware USB devices should only be used for ADS-B traffic, as they have an integrated filter optimized explicitly for the 1090 MHz frequencies. The orange FlightAware USB devices work well for tracking UAT traffic. See [Part 9 – Configure UAT (Optional and US only)](#part-9--configure-uat-optional-and-us-only) for more details.
 
 # Part 2 – Setup balena and configure the device
 
