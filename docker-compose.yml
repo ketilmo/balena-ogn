@@ -1,4 +1,4 @@
-version: '2'
+version: '2.1'
 services:
   ogn:
     build: ./ogn
@@ -24,3 +24,19 @@ services:
       - "8083:8083"
       - "50000:50000"
       - "50001:50001"
+  wifi-connect:
+    build: ./wifi-connect
+    restart: always
+    network_mode: host
+    environment:
+      - DBUS_SYSTEM_BUS_ADDRESS="unix:path=/host/run/dbus/system_bus_socket"
+      - PORTAL_LISTENING_PORT=8181
+      - PORTAL_SSID=balenaWiFi
+      - PORTAL_PASSPHRASE=balenaWiFi
+      - ACTIVITY_TIMEOUT=120
+    ports:
+      - "8181:8181"
+    cap_add:
+      - NET_ADMIN
+    labels:
+      io.balena.features.dbus: '1'
