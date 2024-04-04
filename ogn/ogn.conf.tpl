@@ -51,9 +51,3 @@ HTTP:
 {
   Port = 8082;
 };
-
-FRB:
-{
-  DetectSNR = 10.0;
-  Server = "ogn3.glidernet.org:50000";
-};
