@@ -5,11 +5,11 @@
 **Feed the glider traffic in your area to the Open Glider Network (OGN) using a Raspberry Pi 3 or 4 with balena!**
 
 
-Tracking commerical aircraft have since long become commonplace through popular services such as [FlightAware](https://flightaware.com/), [Flightradar24](https://www.flightradar24.com/), and [Plane Finder](https://planefinder.net/). Smaller soarding aircrafts such as gliders, paragliders and drones are not equiped with ADS-B transponders, however, and have been impossible to track.
+Tracking commercial aircraft has long become commonplace through popular services such as [FlightAware](https://flightaware.com/), [Flightradar24](https://www.flightradar24.com/), and [Plane Finder](https://planefinder.net/). Smaller soaring aircraft such as gliders, paragliders, and drones are not equipped with ADS-B transponders, however, and have been impossible to track.
 
-With [Open Glider Network](http://wiki.glidernet.org/) and linked sites such as [Spot the Gliders](https://live.glidernet.org/), [GliderRadar](https://www.gliderradar.com/), [GliderTracker](https://glidertracker.de/), and [Glide and Seek](https://glideandseek.com/), that's changing. It's a community powered service that's tracking smaller aircraft using lightweight beacon technology such as FLARM, FANET and ADS-L.
+With [Open Glider Network (OGN)](http://wiki.glidernet.org/) and syndicator sites such as [Spot the Gliders](https://live.glidernet.org/), [GliderRadar](https://www.gliderradar.com/), [GliderTracker](https://glidertracker.de/), and [Glide and Seek](https://glideandseek.com/), that's changing. OGN is a community-powered service that tracks smaller aircraft using lightweight beacon technology such as FLARM, FANET, and ADS-L.
 
-Sounds fun? All you need to start feeding data to Open Glider Network and OpenSky Network is a Rapberry Pi, an [RTL-SDR](https://www.rtl-sdr.com/) USB stick, and an antenna – together with the code and instructions below. 
+Sounds fun? To start feeding data to Open Glider Network and OpenSky Network, you need a Raspberry Pi, an [RTL-SDR](https://www.rtl-sdr.com/) USB stick, and an antenna—together with the code and instructions below. 
 
 # Stay in the loop
 
@@ -47,11 +47,11 @@ Sounds fun? All you need to start feeding data to Open Glider Network and OpenSk
 </tr>
 </table>
 
-Please [let us know](https://github.com/ketilmo/balena-ogn/discussions/new) if you are successfully running balena-ogn on a hardware platform not listed here!
+Please [let us know](https://github.com/ketilmo/balena-ogn/discussions/new) if you are successfully running **balena-ogn** on a hardware platform not listed here!
 
 # Credits
 
-The balena-ogn project was created and is maintained by [Ketil Moland Olsen](https://github.com/ketilmo/). It is based on the splendid [ogn-pi34](https://github.com/VirusPilot/ogn-pi34) repository maintained by the one and only [VirusPilot](https://github.com/VirusPilot). Thank you kindly for your great work! A big kudos also goes to the team behind Open Glider Network for making it all possible.
+The balena-ogn project was created and is maintained by [Ketil Moland Olsen](https://github.com/ketilmo/). It is based on the splendid [ogn-pi34](https://github.com/VirusPilot/ogn-pi34) repository maintained by the one and only [VirusPilot](https://github.com/VirusPilot). Thank you kindly for your excellent work! A big kudo goes to the team behind Open Glider Network for making it all possible.
 
 Software packages downloaded, installed, and configured by the balena-ogn script are disclosed in [CREDITS.md](https://github.com/ketilmo/balena-ads-b/blob/master/CREDITS.md).
 
@@ -79,10 +79,10 @@ Software packages downloaded, installed, and configured by the balena-ogn script
   * [Feeding to OpenSky Network](#feeding-to-opensky-network)
   * [Changing WiFi network](#changing-wifi-network)
   * [Disabling specific services](#disabling-specific-services)
-- [Part 5 – Updating to the latest version](#part-5---updating-to-the-latest-version)
+- [Part 6 – Updating to the latest version](#part-6---updating-to-the-latest-version)
 
 # Part 1 – Build the receiver
-In its most minimal configuration, the receiver can be built using three core components: A currently supported [device](https://thepihut.com/products/raspberry-pi-4-model-b?variant=20064052674622) (see the [complete list](#supported-devices) above), a good [RTL-SDR USB dongle](https://thepihut.com/products/rtl-sdr-blog-v3-usb-dongle-with-dipole-antenna-kit) and an [868 MHz](https://store.rakwireless.com/products/fiber-glass-antenna?variant=41100821921990) (for Europe, Africa, and New Zealand) or [915 MHz](https://store.rakwireless.com/products/fiber-glass-antenna?variant=39705894813894) (for USA and Australia) antenna. In addition, you would need a [power supply](https://thepihut.com/products/raspberry-pi-27w-usb-c-power-supply?variant=42531604136131) for the device, an [SD card](https://thepihut.com/products/sandisk-microsd-card-class-10-a1) to install the operating system on, an [antenna cable](https://store.rakwireless.com/products/pulsar-cable-rak9731-rak9733?variant=39677580968134), and – depending on your choice – an [SMA adapter](https://store.rakwireless.com/products/sma-adapter). If you don't have it already, you'll need a [SD card reader](https://thepihut.com/products/mini-usb-c-microsd-card-reader), too. Although not strictly necessary, a [case](https://thepihut.com/products/raspberry-pi-4-case) for the device could be a good idea.
+In its most minimal configuration, the receiver can be built using three core components: A currently supported [device](https://thepihut.com/products/raspberry-pi-4-model-b?variant=20064052674622) (see the [complete list](#supported-devices) above), a good [RTL-SDR USB dongle](https://thepihut.com/products/rtl-sdr-blog-v3-usb-dongle-with-dipole-antenna-kit) and an [868 MHz](https://store.rakwireless.com/products/fiber-glass-antenna?variant=41100821921990) (for Europe, Africa, and New Zealand) or [915 MHz](https://store.rakwireless.com/products/fiber-glass-antenna?variant=39705894813894) (for USA and Australia) antenna. In addition, you would need a [power supply](https://thepihut.com/products/raspberry-pi-27w-usb-c-power-supply?variant=42531604136131) for the device, an [SD card](https://thepihut.com/products/sandisk-microsd-card-class-10-a1) to install the operating system on, an [antenna cable](https://store.rakwireless.com/products/pulsar-cable-rak9731-rak9733?variant=39677580968134), and – depending on your choice – an [SMA adapter](https://store.rakwireless.com/products/sma-adapter). If you don't have it already, you'll need a [SD card reader](https://thepihut.com/products/mini-usb-c-microsd-card-reader), too. Although not strictly necessary, a [case](https://thepihut.com/products/raspberry-pi-4-case) could be a good idea for the device.
 
 Piecing together the pieces should be straightforward. For more information, including other antenna options, look at the official OGN [hardware docs](https://wiki.glidernet.org/ogn-receiver-hardware-and-software). (Remember: For balena-ogn to work, please go with a device from the [supported devices](#supported-devices) list.)
 
@@ -90,25 +90,25 @@ Piecing together the pieces should be straightforward. For more information, inc
 
 # Part 2 – Initial setup
 
-On a high level, there are two ways to deploy **balena-ogn**. The easy way to get started, is to simply click this button:
+On a high level, there are two ways to deploy **balena-ogn**. The easy way to get started is to simply click this button:
 
 [![Deploy with button](https://www.balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/ketilmo/balena-ogn&defaultDeviceType=raspberrypi4-64)
 
-It will take you through the process of creating (or logging into an existing) balena account and deploying the solution to and SD-card that you will insert into a computing device of choice. When you are done, the new device will show up on the balena dashboard. Magic! You can now skip directly to [Part 3 – Configuration](#part-3--configuration).
+It will take you through creating (or logging into an existing) balena account and deploying the solution to an SD card you insert into a computing device of your choice. When you finish, the new device will appear on the balena dashboard. Magic! When this is done, you can skip directly to [Part 3 – Configuration](#part-3--configuration).
 
-If you want to have more granular control, or maybe combine balena-ogn with its sister project **[balena-ads-b](https://github.com/ketilmo/balena-ads-b)**, you might want to walk through this manual procedure instead:
+If you want to have more granular control or maybe pair balena-ogn with its sister project **[balena-ads-b](https://github.com/ketilmo/balena-ads-b)**, you might want to walk through this manual procedure instead:
 
  1. [Create a free balena account](https://dashboard.balena-cloud.com/signup). You might be asked to upload your public SSH key during the process. If you don't have a public SSH key yet, you can [create one](https://help.github.com/en/articles/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent).
  2. Sign in to balena and head to the [*Fleets*](https://dashboard.balena-cloud.com/fleets) panel.
- 3. Create a fleet with the name of your choice for your device type. Please take note of the fleet name. You will need it later. In the dialog that appears, pick a *Default Device Type* that matches your device. Specify the SSID and password if you want to use WiFi (and your device supports it). 
- 4. balena will create an SD card image for you, which will start downloading automatically after a few seconds. Flash the image to an SD card using balena's dedicated tool [balenaEtcher](https://www.balena.io/etcher/).
+ 3. Create a fleet with the name of your choice for your device type. Please take note of the fleet name. Just so you know, you will need it later. In the dialogue that appears, pick a *Default Device Type* that matches your device. Specify the SSID and password if you want to use WiFi (and your device supports it). 
+ 4. balena will create an SD card image for you, which will download automatically after a few seconds. Flash the image to an SD card using balena's dedicated tool [balenaEtcher](https://www.balena.io/etcher/).
  5. Insert the SD card in your receiver, and connect it to your cabled network (unless you plan to use WiFi only and configured that in step 3). 
  6. Power up the receiver.
  7. From the balena dashboard, navigate to the fleet you created. A new device with an automatically generated name should appear within a few minutes. Click on it to open it.
- 8. Rename your device to your taste by clicking on the pencil icon next to the current device name.
+ 8. You can rename your device to your taste by clicking on the pencil icon next to the current device name.
  9. Almost there! Next, we will push the **balena-ogn** code to your device through the balena cloud. We'll do that using the [balena CLI](https://github.com/balena-io/balena-cli). Follow the [official instructions](https://github.com/balena-io/balena-cli/blob/master/INSTALL.md) to download and install the CLI for your operating system of choice.
- 10. After installing the balena-cli, head into your terminal and log in to balena with the following command: `balena login`. Then follow the instructions on the screen.
- 11. Next, clone the balena-ads-b repository to your local computer: `git clone git@github.com:ketilmo/balena-ogn.git`. If you want to make changes to the repo, you can also fork it.
+ 10. After installing the balena-cli, head into your terminal and log in to balena with the following command: `balena login`. Then, follow the instructions on the screen.
+ 11. Clone the balena-ads-b repository to your local computer: `git clone git@github.com:ketilmo/balena-ogn.git`. You can also fork the repo if you want to make changes to it.
  12. Head into the folder of the newly cloned repo by typing `cd balena-ogn`.
  13. Do you remember your fleet name from earlier? Good. Now, we are ready to push the applications to balena's servers by typing `balena push YOUR–FLEET–NAME–HERE`.
  14. Now, wait while the Docker containers build on balena's servers. If the process is successful, you will see a beautiful piece of ASCII art depicting a unicorn right in your terminal window:
@@ -141,17 +141,17 @@ If you want to have more granular control, or maybe combine balena-ogn with its 
  15. Wait a few moments while the Docker containers are deployed and installed on your device. The groundwork is now done – good job!
 
 # Part 3 – Configuration
-With your device installed and ready, next step is to configure it. One of the neat features of balena is that all configuration lives in variables that can easily be added through balena's dashboard. Below, we'll go through the concept of adding these variables.
+With your device installed and ready, the next step is to go ahead and configure it. One of the neat features of balena is that all configuration lives in variables that can easily be added through balena's dashboard. Below, we'll go through the concept of adding these variables.
 
 ## Adding configuration variables
-Configuration variables are core to balena, and we'll be adding quite a few of them during the setup. The procedure is simple:
-1. Head into the balena console and the [*Fleets*](https://dashboard.balena-cloud.com/fleets) panel. From there, click on the device that you created earlier. 
-2. Click on the _Device Variables_-button on the left hand-side of the screen.
-3. Click on the blue _Add variable_-button on the upper left hand-side of the screen.
-4. Select _Service_ as specified in the instructions (below), and type inn the variable _Name_ and _Value_ as specified.
+Configuration variables are core to balena, and we'll add quite a few during the setup. The procedure is simple:
+1. Open the balena console and the [*Fleets*](https://dashboard.balena-cloud.com/fleets) panel. Then, click on the device you created earlier. 
+2. Click on the _Device Variables_-button on the left-hand side of the screen.
+3. Click on the blue _Add variable_-button on the upper left-hand side of the screen.
+4. Select _Service_ as specified in the instructions (below), and type in the variable _Name_ and _Value_ as specified.
 5. Click the _Add_ button.
 6. Add more variables if desired, repeating steps 3 to 5.
-7. When done, commit the changes to balena by clicking the _Apply all changes_-button on the lower left hand-side of the screen. (Alternatively, revert the changes by clicking the red _Revert all changes_-button.)
+7. When done, commit the changes to balena by clicking the _Apply all changes_ button on the lower left-hand side of the screen. (Alternatively, revert the changes by clicking the red _Revert all changes_ button.)
 8. balena will now restart the services you have configured. Within a minute or two, everything should be operational.
 
 ## Naming your station
@@ -162,50 +162,50 @@ Your OGN station will need a unique name to connect to the OGN services. The nam
  - Characters and numbers only (A-Z, a-z and 0-9)
 
 ### Naming convention for airports
-If, and only if, your receiver is located at an airport or airfield, give it a 4 character ICAO code identifier. It is important to keep the identifier in **upper-case notation**, e.g.:
+If, and only if, your receiver is located at an airport or airfield, give it a 4-character ICAO code identifier. It is important to keep the identifier in **upper-case notation**, e.g.:
 
  - **LFLE**  (Challes-les-Eaux)  
  - **LFLG**  (Grenoble, Versoud)  
  - **LFLP**  (Annecy, Meythet)  
  - **EPZR**  (ZAR, Poland)
 
-If there is no ICAO code identifier for the airport, use the name of the airport in **CamelCase** naming convention, e.g.:
+If there is no ICAO code identifier for the airport, use the name of the airport in the **CamelCase** naming convention, e.g.:
 
  - **Koenigsdf**  (Gliding Center Königsdorf, Bavaria)  
-- **Klippneck**  (Klippeneck, Germany)  
-- **BadWrshfn**  (Bad Wörishofen, Germany)
+ - **Klippneck**  (Klippeneck, Germany)  
+ - **BadWrshfn**  (Bad Wörishofen, Germany)
 
 ### Naming convention for other locations
-For other locations than airports (cities, towns, private houses, etc..) please follow the **CamelCase** naming convention. In addition, it's recommended to choose a name corresponding to the closest "known" place (town, institute, mountain, etc.), e.g:
+For other locations than airports (cities, towns, private houses, etc..) please follow the **CamelCase** naming convention. In addition, it's recommended to choose a name corresponding to the closest "known" place (town, institute, mountain, etc.), e.g.:
 
-- **Cern**  (European Organization for Nuclear Research, Geneva, Switzerland)  
-- **Paris**
-- **Cluses**  (Receiver near Cluses, France)  
-- **LeNoiray**  
-- **Marmolada**  (Highest mountain of the dolomites, Italy)
+ - **Cern**  (European Organization for Nuclear Research, Geneva, Switzerland)  
+ - **Paris**
+ - **Cluses**  (Receiver near Cluses, France)  
+ - **LeNoiray**  
+ - **Marmolada**  (Highest mountain of the dolomites, Italy)
 
 ### Optional postfix
-If there is more than one receiver at a given location, you can use numbers **or** cardinal direction (N,W,S,E).
+If there is more than one receiver at a given location, you can use numbers **or** cardinal direction (N, W, S, E).
 
  - **HugeTown1**  
-- **HugeTown2**  
-- **MyTownN**  
-- **MyTownS**
+ - **HugeTown2**  
+ - **MyTownN**  
+ - **MyTownS**
 
 ### Common mistakes
-- A receiver is often located at the airport/airfield, so there is no need to mention this. (Bad: HoyaFlpl, EDLGTurm. Good: Hoya, EDLG.)
-- Don't use country codes in the name. (Bad: DEboetzow. Good: Boetzow.)
-- Don't use abbreviations too much, the maximum of 9 characters should be enough in most cases. (Bad: BOZ. Better: BergenOZ or BgOpZoom. Bad: Strass1. Better: Strassham.)
-- Choose a name you can google. (Bad: Something cryptic like hgrtl, HGC, KCCM, SFVWUG, flevonet2.)
-- Don't write out cardinal directions. (Bad: LSZKWest, UrySud. Good: LSZKW, UryS. Even better: LSZK, Ury.)
+ - A receiver is often located at the airport/airfield, so you don't need to mention this. (Bad: HoyaFlpl, EDLGTurm. Good: Hoya, EDLG.)
+ - Don't use country codes in the name. (Bad: DEboetzow. Good: Boetzow.)
+ - Don't use abbreviations too much. The maximum of 9 characters should be enough in most cases. (Bad: BOZ. Better: BergenOZ or BgOpZoom. Bad: Strass1. Better: Strassham.)
+ - Choose a name you can google. (Bad: Something cryptic like hgrtl, HGC, KCCM, SFVWUG, flevonet2.)
+ - Don't write out cardinal directions. (Bad: LSZKWest, UrySud. Good: LSZKW, UryS. Even better: LSZK, Ury.)
 
 ### Exceptions for the UK
-In the UK, if a receiver is near to a BGA turn point, it can be named UKXXX where XXX is the BGA turn point, e.g. UKFOX. (**Note:** This does not have a dash in it.)
+In the UK, if a receiver is near a BGA turn point, it can be named UKXXX, where XXX is the BGA turn point, e.g. UKFOX. (**Note:** This does not have a dash.)
 
 *Adapted from [wiki.glidernet.org](http://wiki.glidernet.org/receiver-naming-convention)*
 
 ### Set your station name
-Have you found the perfect name for your station now, that follows the naming convention? And checked with one of the OGN sites, such as [GliderRadar](https://www.gliderradar.com/) og [GliderTracker](https://glidertracker.de/), that it is not already taken? Perfect! Let's set that name in balena:
+Have you been able to find the perfect name for your station that follows the naming convention? And checked with one of the OGN sites, such as [GliderRadar](https://www.gliderradar.com/) or [GliderTracker](https://glidertracker.de/), that it is not already taken? Perfect! Let's set that name in balena:
 
 1. Set the receiver name by creating a [configuration variable](#adding-configuration-variables) for the service _ogn_ with the name `OGN_CALLSIGN` and a value corresponding to the receiver name, e.g. `Copenhagen`.
 
@@ -213,7 +213,7 @@ Have you found the perfect name for your station now, that follows the naming co
 
 Next, we'll configure the receiver with its geographic location. Unless you know this by heart, you can use [Google Maps](https://maps.google.com) to find it. The corresponding coordinates should appear when you click on your desired location on the map. We are looking for the decimal coordinates, which should look like *60.395429, 5.325127.*
 
-You will also need to specify the antennas altitude _in meters_ above sea level. If you need to find the altitude, you use [one of several online services](https://www.maps.ie/coordinates.html). Remember to add the approximate number of corresponding meters if your antenna is mounted above ground level.
+You must also specify the antenna's altitude _in meters_ above sea level. If you need to find the altitude, you use [one of several online services](https://www.maps.ie/coordinates.html). Remember to add the approximate number of corresponding meters if your antenna is above ground level.
 
 1. Set the receiver latitude by creating a [configuration variable](#adding-configuration-variables) for _All services_ with the name `LAT` and a value corresponding to the decimal latitude, e.g. `60.12345`.
 2. Set the receiver longitude by creating a [configuration variable](#adding-configuration-variables) for _All services_ with the name `LON` and a value corresponding to the decimal longitude, e.g. `4.12345`.
@@ -222,27 +222,26 @@ You will also need to specify the antennas altitude _in meters_ above sea level.
 That's it! After the services have restarted, your shiny new OGN station should appear on the map.
 
 # Part 4 – Combining OGN and ADS-B feeding
-One of the great things about balena is that it's easy to run several different services on one box, with proper isolation. Instructions on how you can combine balena-ogn and balena-ads-b is coming soon. [Subscribe to our newsletter](https://buttondown.email/balena-ads-b/) to be notified when the instructions are ready, or [reach out to the repo's maintainer](https://ketil.mo.land/contact) if you just can't wait – and are ready for some manual work.
+One of the great things about balena is that it's easy to run several different services on one box with proper isolation. Instructions on how you can combine balena-ogn and balena-ads-b are coming soon. [Subscribe to our newsletter](https://buttondown.email/balena-ads-b/) to be notified when the instructions are ready, or [reach out to the repo's maintainer](https://ketil.mo.land/contact) if you just can't wait – and are ready for some manual work.
 
 
 # Part 5 – Advanced configuration
 
 ## SDR PPM calibration
-SDR PPM calibration is only required for non-TCXO SDRs, and is currently a manual process in **balena-ogn.** It's highly recommended to use a TCXO SDR, as explained in [Part 1 – Build the receiver](#part-1--build-the-receiver). If you need to adjust the PPM, you can do so manually by creating a [configuration variable](#adding-configuration-variables) for the service _ogn_ with the name `OGN_FREQCORR` and a value corresponding to the desired frequence correction, e.g. `40`.
+SDR PPM calibration is only required for non-TCXO SDRs and is currently a manual process in **balena-ogn.** Using a TCXO SDR is highly recommended, as explained in [Part 1 – Build the receiver](#part-1--build-the-receiver). If you need to adjust the PPM, you can do so manually by creating a [configuration variable](#adding-configuration-variables) for the service _ogn_ with the name `OGN_FREQCORR` and a value corresponding to the desired frequency correction, e.g. `40`.
 
 ## Feeding to OpenSky Network
-In addition to feeding flight data to OGN, you can send the same data to the research projet OpenSky Network. The more parties that can make use of your data, the better, right? 
+In addition to feeding flight data to OGN, you can send the same data to the research project OpenSky Network. The more parties that can use your data, the better, right? 
 
 1. Enable OpenSky Network feeding by creating a [configuration variable](#adding-configuration-variables) for the service _ogn_ with the name `OGN_OPENSKY_ENABLED` and the value `true`.
 
 ## Changing WiFi network
-If your device comes up without an active connection to the Internet, the `wifi-connect` container will create a network with a captive portal to connect to a local WiFi network. This lets you switch networks after the initial setup without reinstalling the SD card. The SSID for the created hotspot is `balenaWiFi`, and the password is`balenaWiFi`. When connected, visit `http://192.168.42.1:8181/` in your web browser to set up the connection.
+If your device comes up without an active connection to the Internet, the `wifi-connect` container will create a network with a captive portal to connect to a local WiFi network. This lets you switch networks after the initial setup without reinstalling the SD card. The SSID for the created hotspot is `balenaWiFi`, and the password is `balenaWiFi`. When connected, visit `http://192.168.42.1:8181/` in your web browser to set up the connection.
 
 ## Disabling specific services
-You can disable the balena-ogn services by creating a *Device Variable* named `DISABLED_SERVICES` with the services you want to disable as comma-separated values. For example, if you want to disable the ogn service, you set the `DISABLED_SERVICES` variable to `ogn`.
+You can disable the balena-ogn services by creating a *Device Variable* named `DISABLED_SERVICES` with the services you want to disable as comma-separated values. For example, if you want to disable the ogn service, set the `DISABLED_SERVICES` variable to `ogn`.
 
-
-# Part 5 – Updating to the latest version
+# Part 6 – Updating to the latest version
 Updating to the latest version is trivial. If you installed balena-ads-b using the blue Deploy with balena-button, you can click it again and overwrite your current application. All settings will be preserved. For convenience, the button is right here:
 
 [![Deploy with button](https://www.balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/ketilmo/balena-ogn&defaultDeviceType=raspberrypi4-64)
