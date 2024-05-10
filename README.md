@@ -9,7 +9,7 @@ Tracking commercial aircraft has long become commonplace through popular service
 
 With [Open Glider Network (OGN)](http://wiki.glidernet.org/) and syndicator sites such as [Spot the Gliders](https://live.glidernet.org/), [GliderRadar](https://www.gliderradar.com/), [GliderTracker](https://glidertracker.de/), and [Glide and Seek](https://glideandseek.com/), that's changing. OGN is a community-powered service that tracks smaller aircraft using lightweight beacon technology such as FLARM, FANET, and ADS-L.
 
-Sounds fun? To start feeding data to Open Glider Network and OpenSky Network, you need a Raspberry Pi, an [RTL-SDR](https://www.rtl-sdr.com/) USB stick, and an antenna—together with the code and instructions below. 
+Sounds fun? To start feeding data to Open Glider Network and [OpenSky Network](https://opensky-network.org/), you need a Raspberry Pi, an [RTL-SDR](https://www.rtl-sdr.com/) USB stick, and an antenna—together with the code and instructions below. 
 
 # Stay in the loop
 
@@ -55,7 +55,7 @@ Please [let us know](https://github.com/ketilmo/balena-ogn/discussions/new) if y
 
 The balena-ogn project was created and is maintained by [Ketil Moland Olsen](https://github.com/ketilmo/). It is based on the splendid [ogn-pi34](https://github.com/VirusPilot/ogn-pi34) repository maintained by the one and only [VirusPilot](https://github.com/VirusPilot). Thank you kindly for your excellent work! A big kudo goes to the team behind Open Glider Network for making it all possible.
 
-Software packages downloaded, installed, and configured by the balena-ogn script are disclosed in [CREDITS.md](https://github.com/ketilmo/balena-ads-b/blob/master/CREDITS.md).
+Software packages downloaded, installed, and configured by the balena-ogn script are disclosed in [CREDITS.md](https://github.com/ketilmo/balena-ogn/blob/master/CREDITS.md).
 
 # Contributors
 <a href="https://github.com/ketilmo/balena-ogn/graphs/contributors">
