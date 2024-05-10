@@ -21,4 +21,9 @@ data:
     - RESIN_HOST_CONFIG_gpu_mem: 128
   defaultDeviceType: "raspberrypi4-64"
   supportedDeviceTypes:
+    - "raspberrypi3"
+    - "raspberrypi3-64"
     - "raspberrypi4-64"
+    - "raspberrypi5"
+    - "jetson-nano-2gb-devkit"
+    - "intel-nuc"
