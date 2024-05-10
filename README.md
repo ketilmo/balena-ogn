@@ -61,7 +61,25 @@ Software packages downloaded, installed, and configured by the balena-ogn script
 </a>
 
 # Table of Contents
-Coming Soon!
+- [Part 1 – Build the receiver](#part-1---build-the-receiver)
+- [Part 2 – Initial setup](#part-2---initial-setup)
+- [Part 3 – Configuration](#part-3---configuration)
+  * [Adding configuration variables](#adding-configuration-variables)
+  * [Naming your station](#naming-your-station)
+    + [Naming convention for airports](#naming-convention-for-airports)
+    + [Naming convention for other locations](#naming-convention-for-other-locations)
+    + [Optional postfix](#optional-postfix)
+    + [Common mistakes](#common-mistakes)
+    + [Exceptions for the UK](#exceptions-for-the-uk)
+    + [Set your station name](#set-your-station-name)
+  * [Set station location](#set-station-location)
+- [Part 4 – Combining OGN and ADS-B feeding](#part-4---combining-ogn-and-ads-b-feeding)
+- [Part 5 – Advanced configuration](#part-5---advanced-configuration)
+  * [SDR PPM calibration](#sdr-ppm-calibration)
+  * [Feeding to OpenSky Network](#feeding-to-opensky-network)
+  * [Changing WiFi network](#changing-wifi-network)
+  * [Disabling specific services](#disabling-specific-services)
+- [Part 5 – Updating to the latest version](#part-5---updating-to-the-latest-version)
 
 # Part 1 – Build the receiver
 In its most minimal configuration, the receiver can be built using three core components: A currently supported [device](https://thepihut.com/products/raspberry-pi-4-model-b?variant=20064052674622) (see the [complete list](#supported-devices) above), a good [RTL-SDR USB dongle](https://thepihut.com/products/rtl-sdr-blog-v3-usb-dongle-with-dipole-antenna-kit) and an [868 MHz](https://store.rakwireless.com/products/fiber-glass-antenna?variant=41100821921990) (for Europe, Africa, and New Zealand) or [915 MHz](https://store.rakwireless.com/products/fiber-glass-antenna?variant=39705894813894) (for USA and Australia) antenna. In addition, you would need a [power supply](https://thepihut.com/products/raspberry-pi-27w-usb-c-power-supply?variant=42531604136131) for the device, an [SD card](https://thepihut.com/products/sandisk-microsd-card-class-10-a1) to install the operating system on, an [antenna cable](https://store.rakwireless.com/products/pulsar-cable-rak9731-rak9733?variant=39677580968134), and – depending on your choice – an [SMA adapter](https://store.rakwireless.com/products/sma-adapter). If you don't have it already, you'll need a [SD card reader](https://thepihut.com/products/mini-usb-c-microsd-card-reader), too. Although not strictly necessary, a [case](https://thepihut.com/products/raspberry-pi-4-case) for the device could be a good idea.
