@@ -5,11 +5,15 @@
 **Feed the glider traffic in your area to the Open Glider Network (OGN) using a Raspberry Pi 3 or 4 with balena!**
 
 
-Tracking commerical aircraft have since long become commonplace through popular services such as [FlightAware](https://flightaware.com/), [Flightradar24](https://www.flightradar24.com/), and [Plane Finder](https://planefinder.net/). Smaller soarding aircrafts such as gliders, paragliders and drones are not equiped with ADS-B transponders, however, and have been impossible to track. With Open Glider Network, that's changing. It's a community powered service that's tracking smaller aircraft using lightweight beacon technology such as FLARM, FANET and ADS-L. Sounds fun? All you need to start feeding data to Open Glider Network and OpenSky Network is a Rapberry Pi, an [RTL-SDR](https://www.rtl-sdr.com/) USB stick, and an antenna – together with the code and instructions below. 
+Tracking commerical aircraft have since long become commonplace through popular services such as [FlightAware](https://flightaware.com/), [Flightradar24](https://www.flightradar24.com/), and [Plane Finder](https://planefinder.net/). Smaller soarding aircrafts such as gliders, paragliders and drones are not equiped with ADS-B transponders, however, and have been impossible to track.
+
+With [Open Glider Network](http://wiki.glidernet.org/) and linked sites such as [Spot the Gliders](https://live.glidernet.org/), [GliderRadar](https://www.gliderradar.com/), [GliderTracker](https://glidertracker.de/), and [Glide and Seek](https://glideandseek.com/), that's changing. It's a community powered service that's tracking smaller aircraft using lightweight beacon technology such as FLARM, FANET and ADS-L.
+
+Sounds fun? All you need to start feeding data to Open Glider Network and OpenSky Network is a Rapberry Pi, an [RTL-SDR](https://www.rtl-sdr.com/) USB stick, and an antenna – together with the code and instructions below. 
 
 # Stay in the loop
 
-👉🏻&nbsp;<a href="https://buttondown.email/balena-ads-b"> Subscribe to our newsletter</a>&nbsp;👈🏻&nbsp; to stay updated on the latest development of this project and its sister project balena ADS-B Flight Tracker.
+👉🏻&nbsp;<a href="https://buttondown.email/balena-ads-b"> Subscribe to our newsletter</a>&nbsp;👈🏻&nbsp; to stay updated on the latest development of this project and its sister project [balena ADS-B Flight Tracker](https://github.com/ketilmo/balena-ads-b).
 
 # Got stuck? Get help!
 
