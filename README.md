@@ -19,6 +19,8 @@ Sounds fun? To start feeding data to Open Glider Network and OpenSky Network, yo
 
 💬&nbsp; [Ask a question](https://github.com/ketilmo/balena-ogn/discussions) in our discussion board
 
+✏️&nbsp; [Create a post](https://forums.balena.io/t/the-balena-ogn-thread/370478) in our balena forum thread
+
 🚨&nbsp; [Raise an issue](https://github.com/ketilmo/balena-ogn/issues) on GitHub
 
 📨&nbsp; [Reach out directly](https://ketil.mo.land/contact)
