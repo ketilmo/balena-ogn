@@ -41,8 +41,8 @@ RUN apt update && \
 	apt install -y $TEMP_INSTALL
 
 WORKDIR /
-RUN git clone https://github.com/librtlsdr/librtlsdr && \
-    cd librtlsdr && \
+RUN git clone https://gitea.osmocom.org/sdr/rtl-sdr.git && \
+    cd rtl-sdr && \
 	dpkg-buildpackage -b --no-sign
 
 COPY install-rtlsdr-ogn.sh /tmp/
