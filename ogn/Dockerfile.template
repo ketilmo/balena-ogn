@@ -36,8 +36,8 @@ RUN apt update && \
 
 
 # Create builder image
-FROM base AS buildstep
-WORKDIR /
+FROM base AS builder
+WORKDIR /build
 
 ARG TEMP_INSTALL="git build-essential libconfig9 libtool debhelper cmake make pkg-config lsb-release libpng-dev libconfig-dev libfftw3-dev"
 
@@ -49,30 +49,24 @@ RUN git clone https://github.com/rtlsdrblog/rtl-sdr-blog --branch master --depth
     cd rtl-sdr-blog && \
     dpkg-buildpackage -b --no-sign
 
-COPY install-rtlsdr-ogn.sh /tmp/
+COPY ./install-rtlsdr-ogn.sh .
 
-RUN chmod +x /tmp/install-rtlsdr-ogn.sh && \
-    /tmp/install-rtlsdr-ogn.sh
+RUN chmod +x ./install-rtlsdr-ogn.sh && \
+    ./install-rtlsdr-ogn.sh
 
 
 # Create release image
 FROM base AS release
-WORKDIR /tmp
+WORKDIR /rtlsdr-ogn
 
-COPY --from=buildstep /librtlsdr0_*.deb .
-COPY --from=buildstep /rtl-sdr_*.deb .
+COPY --from=builder /build/librtlsdr0_*.deb .
+COPY --from=builder /build/rtl-sdr_*.deb .
 
 RUN dpkg -i librtlsdr0_*.deb && \
     dpkg -i rtl-sdr_*.deb && \
     rm *.deb
 
-WORKDIR /root
-
-RUN mkdir rtlsdr-ogn
-
-WORKDIR /root/rtlsdr-ogn/
-
-COPY --from=buildstep /tmp/rtlsdr-ogn/* /root/rtlsdr-ogn/
+COPY --from=builder /build/rtlsdr-ogn .
 RUN wget --no-check-certificate https://earth-info.nga.mil/GandG/wgs84/gravitymod/egm96/binary/WW15MGH.DAC
 
 RUN chown root gsm_scan && \
@@ -85,10 +79,10 @@ RUN chown root gsm_scan && \
 
 COPY ogn.conf.tpl .
 
-COPY start.sh /
-RUN chmod +x /start.sh
+COPY start.sh .
+RUN chmod +x ./start.sh
 
-COPY add-serial-868.sh /
-RUN chmod +x /add-serial-868.sh
+COPY add-serial-868.sh .
+RUN chmod +x ./add-serial-868.sh
 
-ENTRYPOINT ["/usr/bin/tini", "--", "/start.sh"]
+ENTRYPOINT ["/usr/bin/tini", "--", "/rtlsdr-ogn/start.sh"]

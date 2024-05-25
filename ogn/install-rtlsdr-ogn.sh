@@ -14,4 +14,4 @@ else
   url=http://download.glidernet.org/arm/rtlsdr-ogn-bin-ARM-latest.tgz
 fi
 
-wget --no-check-certificate -pO- $url | tar xvz
+wget --no-check-certificate -qO- $url | tar xvz
