@@ -29,21 +29,21 @@ ENV OGN_GSM_GAIN 25.0
 ARG PERM_INSTALL="ntp ntpdate procserv telnet nano tini wget libpng-tools lynx libusb-1.0-0-dev libfftw3-bin gettext-base"
 
 RUN apt update && \
-	apt install -y $PERM_INSTALL && \
-	apt clean && apt autoclean && apt autoremove && \
-	rm -rf /var/lib/apt/lists/*
+    apt install -y $PERM_INSTALL && \
+    apt clean && apt autoclean && apt autoremove && \
+    rm -rf /var/lib/apt/lists/*
 
 FROM base AS buildstep
 
 ARG TEMP_INSTALL="git build-essential libconfig9 libtool debhelper cmake make pkg-config lsb-release libpng-dev libconfig-dev libfftw3-dev"
 
 RUN apt update && \
-	apt install -y $TEMP_INSTALL
+    apt install -y $TEMP_INSTALL
 
 WORKDIR /
 RUN git clone https://gitea.osmocom.org/sdr/rtl-sdr.git && \
     cd rtl-sdr && \
-	dpkg-buildpackage -b --no-sign
+    dpkg-buildpackage -b --no-sign
 
 COPY install-rtlsdr-ogn.sh /tmp/
 COPY install/* /tmp/
@@ -69,13 +69,13 @@ WORKDIR /root/rtlsdr-ogn/
 COPY --from=buildstep /tmp/rtlsdr-ogn-0.3.2/* /root/rtlsdr-ogn/
 RUN wget http://download.glidernet.org/common/WW15MGH.DAC
 
-RUN chown root gsm_scan
-RUN chmod a+s gsm_scan
-RUN chown root ogn-rf
-RUN chmod a+s ogn-rf
-RUN chown root rtlsdr-ogn
-RUN chmod a+s rtlsdr-ogn
-RUN mknod gpu_dev c 100 0
+RUN chown root gsm_scan && \
+    chmod a+s gsm_scan && \
+    chown root ogn-rf && \
+    chmod a+s ogn-rf && \
+    chown root rtlsdr-ogn && \
+    chmod a+s rtlsdr-ogn && \
+    mknod gpu_dev c 100 0
 
 COPY ogn.conf.tpl .
 
