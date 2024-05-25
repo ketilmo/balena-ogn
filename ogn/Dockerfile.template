@@ -1,3 +1,4 @@
+# Create base image
 FROM balenalib/%%BALENA_ARCH%%-debian:bookworm AS base
 LABEL maintainer="https://github.com/ketilmo"
 
@@ -33,16 +34,19 @@ RUN apt update && \
     apt clean && apt autoclean && apt autoremove && \
     rm -rf /var/lib/apt/lists/*
 
+
+# Create builder image
 FROM base AS buildstep
+WORKDIR /
 
 ARG TEMP_INSTALL="git build-essential libconfig9 libtool debhelper cmake make pkg-config lsb-release libpng-dev libconfig-dev libfftw3-dev"
 
 RUN apt update && \
     apt install -y $TEMP_INSTALL
 
-WORKDIR /
-RUN git clone https://gitea.osmocom.org/sdr/rtl-sdr.git && \
-    cd rtl-sdr && \
+# Compile rtl-sdr package with modifications for "silver dongle" v3 and v4
+RUN git clone https://github.com/rtlsdrblog/rtl-sdr-blog --branch master --depth 1 --single-branch && \
+    cd rtl-sdr-blog && \
     dpkg-buildpackage -b --no-sign
 
 COPY install-rtlsdr-ogn.sh /tmp/
@@ -50,15 +54,17 @@ COPY install-rtlsdr-ogn.sh /tmp/
 RUN chmod +x /tmp/install-rtlsdr-ogn.sh && \
     /tmp/install-rtlsdr-ogn.sh
 
-FROM base AS release
 
+# Create release image
+FROM base AS release
 WORKDIR /tmp
 
 COPY --from=buildstep /librtlsdr0_*.deb .
-COPY --from=buildstep /librtlsdr-dev_*.deb .
 COPY --from=buildstep /rtl-sdr_*.deb .
 
-RUN dpkg -i librtlsdr0_*.deb && sudo dpkg -i librtlsdr-dev_*.deb && sudo dpkg -i rtl-sdr_*.deb && rm -rf *
+RUN dpkg -i librtlsdr0_*.deb && \
+    dpkg -i rtl-sdr_*.deb && \
+    rm *.deb
 
 WORKDIR /root
 
