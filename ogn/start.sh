@@ -63,10 +63,10 @@ echo " "
 # Variables are verified – continue with startup procedure.
 
 # Configure receiver according to environment variables.
-envsubst < /root/rtlsdr-ogn/ogn.conf.tpl> /root/rtlsdr-ogn/ogn.conf
+envsubst < /rtlsdr-ogn/ogn.conf.tpl> /rtlsdr-ogn/ogn.conf
 
-/usr/bin/procServ -k ^X --killsig 15 -x ^C -i ^D -f -c /root/rtlsdr-ogn 50000 ./ogn-rf ogn.conf 2>&1 | stdbuf -o0 sed --unbuffered '/^$/d' | awk -W interactive '{print "[ogn-rf]    "  $0}' &
-/usr/bin/procServ -k ^X --killsig 15 -x ^C -i ^D -f -c /root/rtlsdr-ogn 50001 ./ogn-decode ogn.conf 2>&1 | stdbuf -o0 sed --unbuffered '/^$/d' | awk -W interactive '{print "[ogn-decode]    "  $0}' &
+/usr/bin/procServ -k ^X --killsig 15 -x ^C -i ^D -f -c /rtlsdr-ogn 50000 ./ogn-rf ogn.conf 2>&1 | stdbuf -o0 sed --unbuffered '/^$/d' | awk -W interactive '{print "[ogn-rf]    "  $0}' &
+/usr/bin/procServ -k ^X --killsig 15 -x ^C -i ^D -f -c /rtlsdr-ogn 50001 ./ogn-decode ogn.conf 2>&1 | stdbuf -o0 sed --unbuffered '/^$/d' | awk -W interactive '{print "[ogn-decode]    "  $0}' &
 
 # Wait for any services to exit.
 wait -n
