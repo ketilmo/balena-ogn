@@ -7,7 +7,7 @@
 
 Tracking commercial aircraft has long become commonplace through popular services such as [FlightAware](https://flightaware.com/), [Flightradar24](https://www.flightradar24.com/), and [Plane Finder](https://planefinder.net/). Smaller soaring aircraft such as gliders, paragliders, and drones are not equipped with ADS-B transponders, however, and have been impossible to track.
 
-With [Open Glider Network (OGN)](http://wiki.glidernet.org/) and syndicator sites such as [Spot the Gliders](https://live.glidernet.org/), [GliderRadar](https://www.gliderradar.com/), [GliderTracker](https://glidertracker.de/), and [Glide and Seek](https://glideandseek.com/), that's changing. OGN is a community-powered service that tracks smaller aircraft using lightweight beacon technology such as FLARM, FANET, and ADS-L.
+With [Open Glider Network (OGN)](http://wiki.glidernet.org/) and syndicator sites such as [Spot the Gliders](https://live.glidernet.org/), [GliderRadar](https://www.gliderradar.com/), [GliderTracker](https://glidertracker.de/), [PureTrack.io](https://puretrack.io/), and [Glide and Seek](https://glideandseek.com/), that's changing. OGN is a community-powered service that tracks smaller aircraft using lightweight beacon technology such as FLARM, FANET, and ADS-L.
 
 Sounds fun? To start feeding data to Open Glider Network and [OpenSky Network](https://opensky-network.org/), you need a Raspberry Pi, an [RTL-SDR](https://www.rtl-sdr.com/) USB stick, and an antenna—together with the code and instructions below. 
 
