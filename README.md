@@ -110,7 +110,7 @@ If you want to have more granular control or maybe pair balena-ogn with its sist
  8. You can rename your device to your taste by clicking on the pencil icon next to the current device name.
  9. Almost there! Next, we will push the **balena-ogn** code to your device through the balena cloud. We'll do that using the [balena CLI](https://github.com/balena-io/balena-cli). Follow the [official instructions](https://github.com/balena-io/balena-cli/blob/master/INSTALL.md) to download and install the CLI for your operating system of choice.
  10. After installing the balena-cli, head into your terminal and log in to balena with the following command: `balena login`. Then, follow the instructions on the screen.
- 11. Clone the balena-ads-b repository to your local computer: `git clone git@github.com:ketilmo/balena-ogn.git`. You can also fork the repo if you want to make changes to it.
+ 11. Clone the balena-ogn repository to your local computer: `git clone git@github.com:ketilmo/balena-ogn.git`. You can also fork the repo if you want to make changes to it.
  12. Head into the folder of the newly cloned repo by typing `cd balena-ogn`.
  13. Do you remember your fleet name from earlier? Good. Now, we are ready to push the applications to balena's servers by typing `balena push YOUR–FLEET–NAME–HERE`.
  14. Now, wait while the Docker containers build on balena's servers. If the process is successful, you will see a beautiful piece of ASCII art depicting a unicorn right in your terminal window:
@@ -244,7 +244,7 @@ If your device comes up without an active connection to the Internet, the `wifi-
 You can disable the balena-ogn services by creating a *Device Variable* named `DISABLED_SERVICES` with the services you want to disable as comma-separated values. For example, if you want to disable the ogn service, set the `DISABLED_SERVICES` variable to `ogn`.
 
 # Part 6 – Updating to the latest version
-Updating to the latest version is trivial. If you installed balena-ads-b using the blue Deploy with balena-button, you can click it again and overwrite your current application. All settings will be preserved. For convenience, the button is right here:
+Updating to the latest version is trivial. If you installed balena-ogn using the blue Deploy with balena-button, you can click it again and overwrite your current application. Choose the "Deploy to existing fleet" option, then select the fleet you want to update. All settings will be preserved. For convenience, the button is right here:
 
 [![Deploy with button](https://www.balena.io/deploy.svg)](https://dashboard.balena-cloud.com/deploy?repoUrl=https://github.com/ketilmo/balena-ogn&defaultDeviceType=raspberrypi4-64)
 
