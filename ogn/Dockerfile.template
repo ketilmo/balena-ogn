@@ -4,30 +4,13 @@ LABEL maintainer="https://github.com/ketilmo"
 
 EXPOSE 8080 8082 8083 50000 50001
 
-ENV LAT=
-ENV LON=
-ENV ALT=
-ENV OGN_DEVICE=
-ENV OGN_CALLSIGN=
-ENV OGN_ADSB_ENABLED=
-ENV OGN_OPENSKY_ENABLED=
-ENV OGN_ADSB_RECEIVER_HOST dump1090-fa
-ENV OGN_ADSB_RECEIVER_PORT 30002
-ENV OGN_ADSB_MAXALT 18000
-ENV OGN_SAMPLERATE 2.0
-ENV OGN_BIASTEE 0
-ENV OGN_FREQCORR +0
-ENV OGN_CENTERFREQ 868.8
-ENV OGN_GAIN 50.0
-ENV OGN_MINNOISE 2.0
-ENV OGN_MAXNOISE 8.0
-ENV OGN_DEMODULATOR_SCANMARGIN 30.0
-ENV OGN_DEMODULATOR_DETECTSNR 11.0
+# Minimum environment variables needed to run the receiver
+ENV APRS_Call=
+ENV Position_Latitude=
+ENV Position_Longitude=
+ENV Position_Altitude=
 
-ENV OGN_GSM_CENTERFREQ 0
-ENV OGN_GSM_GAIN 25.0
-
-ARG PERM_INSTALL="ntp ntpdate procserv telnet nano tini wget libpng-tools lynx libusb-1.0-0-dev libfftw3-bin gettext-base"
+ARG PERM_INSTALL="ntp ntpdate procserv telnet nano tini wget libpng-tools lynx libusb-1.0-0-dev libfftw3-bin gettext-base python3 python3-libconf"
 
 RUN apt update && \
     apt install -y $PERM_INSTALL && \
@@ -72,7 +55,8 @@ COPY --from=builder /build/rtlsdr-ogn .
 #RUN wget --no-check-certificate https://earth-info.nga.mil/GandG/wgs84/gravitymod/egm96/binary/WW15MGH.DAC
 RUN wget http://download.glidernet.org/common/WW15MGH.DAC
 
-COPY ogn.conf.tpl .
+COPY env2conf.py .
+RUN chmod +x ./env2conf.py
 
 COPY start.sh .
 RUN chmod +x ./start.sh
