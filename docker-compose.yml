@@ -5,12 +5,10 @@ services:
     image: ogn
     restart: always
     environment:
-      - LAT=
-      - LON=
-      - ALT=
-      - OGN_DEVICE=
-      - OGN_CALLSIGN=
-
+      - APRS_Call=
+      - Position_Latitude=
+      - Position_Longitude=
+      - Position_Altitude=
     devices:
       - "/dev/bus/usb"
     expose:
@@ -24,6 +22,7 @@ services:
       - "8083:8083"
       - "50000:50000"
       - "50001:50001"
+
   wifi-connect:
     build: ./wifi-connect
     restart: always

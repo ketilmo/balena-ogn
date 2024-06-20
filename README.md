@@ -209,7 +209,7 @@ In the UK, if a receiver is near a BGA turn point, it can be named UKXXX, where 
 ### Set your station name
 Have you been able to find the perfect name for your station that follows the naming convention? And checked with one of the OGN sites, such as [GliderRadar](https://www.gliderradar.com/) or [GliderTracker](https://glidertracker.de/), that it is not already taken? Perfect! Let's set that name in balena:
 
-1. Set the receiver name by creating a [configuration variable](#adding-configuration-variables) for the service _ogn_ with the name `OGN_CALLSIGN` and a value corresponding to the receiver name, e.g. `Copenhagen`.
+1. Set the receiver name by creating a [configuration variable](#adding-configuration-variables) for the service _ogn_ with the name `APRS_Call` and a value corresponding to the receiver name, e.g. `Copenhagen`.
 
 ## Set station location
 
@@ -217,9 +217,9 @@ Next, we'll configure the receiver with its geographic location. Unless you know
 
 You must also specify the antenna's altitude _in meters_ above sea level. If you need to find the altitude, you use [one of several online services](https://www.maps.ie/coordinates.html). Remember to add the approximate number of corresponding meters if your antenna is above ground level.
 
-1. Set the receiver latitude by creating a [configuration variable](#adding-configuration-variables) for _All services_ with the name `LAT` and a value corresponding to the decimal latitude, e.g. `60.12345`.
-2. Set the receiver longitude by creating a [configuration variable](#adding-configuration-variables) for _All services_ with the name `LON` and a value corresponding to the decimal longitude, e.g. `4.12345`.
-3. Set the receiver antenna's altitude by creating a [configuration variable](#adding-configuration-variables) for _All services_ with the name `ALT` and a value corresponding to the altitude above sea level in meters, e.g. `45`.
+1. Set the receiver latitude by creating a [configuration variable](#adding-configuration-variables) for _All services_ with the name `Position_Latitude` and a value corresponding to the decimal latitude, e.g. `60.12345`.
+2. Set the receiver longitude by creating a [configuration variable](#adding-configuration-variables) for _All services_ with the name `Position_Longitude` and a value corresponding to the decimal longitude, e.g. `4.12345`.
+3. Set the receiver antenna's altitude by creating a [configuration variable](#adding-configuration-variables) for _All services_ with the name `Position_Altitude` and a value corresponding to the altitude above sea level in meters, e.g. `45`.
 
 That's it! After the services have restarted, your shiny new OGN station should appear on the map.
 
@@ -230,12 +230,12 @@ One of the great things about balena is that it's easy to run several different 
 # Part 5 – Advanced configuration
 
 ## SDR PPM calibration
-SDR PPM calibration is only required for non-TCXO SDRs and is currently a manual process in **balena-ogn.** Using a TCXO SDR is highly recommended, as explained in [Part 1 – Build the receiver](#part-1--build-the-receiver). If you need to adjust the PPM, you can do so manually by creating a [configuration variable](#adding-configuration-variables) for the service _ogn_ with the name `OGN_FREQCORR` and a value corresponding to the desired frequency correction, e.g. `40`.
+SDR PPM calibration is only required for non-TCXO SDRs and is currently a manual process in **balena-ogn.** Using a TCXO SDR is highly recommended, as explained in [Part 1 – Build the receiver](#part-1--build-the-receiver). If you need to adjust the PPM, you can do so manually by creating a [configuration variable](#adding-configuration-variables) for the service _ogn_ with the name `RF_FreqCorr` and a value corresponding to the desired frequency correction, e.g. `40`.
 
 ## Feeding to OpenSky Network
 In addition to feeding flight data to OGN, you can send the same data to the research project OpenSky Network. The more parties that can use your data, the better, right? 
 
-1. Enable OpenSky Network feeding by creating a [configuration variable](#adding-configuration-variables) for the service _ogn_ with the name `OGN_OPENSKY_ENABLED` and the value `true`.
+1. Enable OpenSky Network feeding by creating a [configuration variable](#adding-configuration-variables) for the service _ogn_ with the name `RF_Demodulator_MergeServer` and the value `flarm-collector.opensky-network.org:20002`.
 
 ## Changing WiFi network
 If your device comes up without an active connection to the Internet, the `wifi-connect` container will create a network with a captive portal to connect to a local WiFi network. This lets you switch networks after the initial setup without reinstalling the SD card. The SSID for the created hotspot is `balenaWiFi`, and the password is `balenaWiFi`. When connected, visit `http://192.168.42.1:8181/` in your web browser to set up the connection.
