@@ -5,6 +5,7 @@ import os
 import re
 import sys
 from typing import Dict, Any
+from ast import literal_eval
 
 VALID_OGN_ENV_PREFIXES = ("ADSB_", "APRS_", "Beacon_", "DDB_", "Demodulator_", "HTTP_", "Position_", "RF_")
 
@@ -19,7 +20,10 @@ def unflatten_dict(d: Dict[str, str]) -> Dict[str, Any]:
             if part not in d:
                 d[part] = {}
             d = d[part]
-        d[parts[-1]] = value
+        try:
+          d[parts[-1]] = literal_eval(value)
+        except:
+          d[parts[-1]] = value
     return unflattened_dict
 
 def is_numeric(value):
